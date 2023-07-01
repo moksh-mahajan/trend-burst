@@ -27,7 +27,6 @@ const authReducer = (state, action) => {
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
-  const isAuthenticated = state.authToken.length !== 0;
 
   const handleAuthStatusCheck = () => {
     const token = localStorage.getItem(authTokenKey) ?? "";
@@ -40,12 +39,13 @@ export function AuthProvider({ children }) {
     toast.success("Logged out!");
   };
 
-  const handleLogin = async ({ email, password }) => {
+  const handleLogin = async ({ username, password }) => {
+    console.log(username,password);
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
         body: JSON.stringify({
-          email,
+          username,
           password,
         }),
       });
@@ -55,7 +55,7 @@ export function AuthProvider({ children }) {
       if (response.status === 200) {
         const data = await response.json();
         const token = data.encodedToken;
-
+        console.log(data)
         // Save token to local storage
         localStorage.setItem(authTokenKey, token);
 
@@ -63,19 +63,19 @@ export function AuthProvider({ children }) {
         toast.success("You are now logged in!");
       }
       if (response.status === 404) {
-        toast.error("Incorrect email or password!");
+        toast.error("Incorrect username or password!");
       }
     } catch (e) {
       console.error(e);
     }
   };
 
-  const handleSignUp = async ({ email, password, firstName, lastName }) => {
+  const handleSignUp = async ({ username, password, firstName, lastName }) => {
     try {
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         body: JSON.stringify({
-          email,
+          username,
           password,
           firstName,
           lastName,
@@ -104,7 +104,7 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated,
+        state,
         handleLogin,
         handleAuthStatusCheck,
         handleLogout,

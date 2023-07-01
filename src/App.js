@@ -1,16 +1,15 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./frontend/contexts/AuthContext";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import Home from "./frontend/pages/Home";
 import Login from "./frontend/pages/login";
 import Signup from "./frontend/pages/signup";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const { isAuthenticated, handleAuthStatusCheck, handleLogout } =
-    useContext(AuthContext);
+  const { handleAuthStatusCheck } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,22 +26,6 @@ function App() {
         newestOnTop={false}
         closeOnClick
       />
-      <button
-        onClick={() => {
-          isAuthenticated ? handleLogout() : navigate("/login");
-        }}
-      >
-        {isAuthenticated ? "Logout" : "Login"}
-      </button>
-      {!isAuthenticated && (
-        <button
-          onClick={() => {
-            navigate("/signup");
-          }}
-        >
-          Signup
-        </button>
-      )}
 
       <Routes>
         <Route path="/" element={<Home />} />
