@@ -41,7 +41,6 @@ export function AuthProvider({ children }) {
   };
 
   const handleLogin = async ({ username, password }) => {
-    console.log(username,password);
     try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
@@ -56,13 +55,12 @@ export function AuthProvider({ children }) {
       if (response.status === 200) {
         const data = await response.json();
         const token = data.encodedToken;
-        console.log(data)
         // Save token to local storage
         localStorage.setItem(authTokenKey, token);
 
         dispatch({ type: "AUTH_SUCCESS", payload: token });
         toast.success("You are now logged in!");
-        navigate("/home")
+        navigate("/", { replace: true });
       }
       if (response.status === 404) {
         toast.error("Incorrect username or password!");
@@ -97,7 +95,7 @@ export function AuthProvider({ children }) {
         toast.success(
           "Congratulations. Your TrendBurst Account has been created!"
         );
-        navigate("/home");
+        navigate("/");
       }
     } catch (e) {
       console.error(e);

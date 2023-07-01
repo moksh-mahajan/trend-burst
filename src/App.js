@@ -1,7 +1,7 @@
 import "./App.css";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./frontend/contexts/AuthContext";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./frontend/pages/Home";
 import Login from "./frontend/pages/login";
 import Signup from "./frontend/pages/signup";
@@ -10,11 +10,18 @@ import "react-toastify/dist/ReactToastify.css";
 import RequiresAuth from "./frontend/components/requiresAuth/requiresAuth";
 
 function App() {
-  const { handleAuthStatusCheck } = useContext(AuthContext);
+  const { state, handleAuthStatusCheck } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     handleAuthStatusCheck();
+    {
+      localStorage.getItem("authToken") ? (
+        <Navigate to={"/"} />
+      ) : (
+        <Navigate to={"/login"} />
+      );
+    }
   }, []);
 
   return (
@@ -29,10 +36,10 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route element={<RequiresAuth />}>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
         </Route>
       </Routes>
     </div>
