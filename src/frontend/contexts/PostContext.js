@@ -54,8 +54,49 @@ export function PostProvider({ children }) {
       console.log(e)
     }
   }
+
+  const likePost = async(postId) => {
+    console.log(postId)
+    try {
+      const token = localStorage.getItem(authTokenKey);
+      const headers = new Headers();
+      headers.append("Authorization", "Bearer " + token);
+      const response = await fetch(`/api/posts/like/${postId}`, {
+        method: "POST",
+        headers,
+      });
+      console.log(response);
+      if (response.status === 201) {
+        const data = await response.json();
+        console.log(data);
+        dispatch({ type: "SET_POSTS", payload: data.posts });
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  const dislikePost = async(postId) => {
+    console.log(postId)
+    try {
+      const token = localStorage.getItem(authTokenKey);
+      const headers = new Headers();
+      headers.append("Authorization", "Bearer " + token);
+      const response = await fetch(`/api/posts/dislike/${postId}`, {
+        method: "POST",
+        headers,
+      });
+      console.log(response);
+      if (response.status === 201) {
+        const data = await response.json();
+        console.log(data);
+        dispatch({ type: "SET_POSTS", payload: data.posts });
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
   return (
-    <PostContext.Provider value={{ state, getPosts,createPost }}>
+    <PostContext.Provider value={{ state, getPosts,createPost,likePost,dislikePost }}>
       {children}
     </PostContext.Provider>
   );

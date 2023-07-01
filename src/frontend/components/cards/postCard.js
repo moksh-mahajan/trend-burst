@@ -1,9 +1,23 @@
+import { useContext } from "react";
 import ProfileImg from "../profileImg";
-import { BsBookmark, BsHeart, BsShare } from "react-icons/bs";
+import { BsBookmark, BsFillHeartFill, BsHeart, BsShare } from "react-icons/bs";
 import { GoComment } from "react-icons/go";
+import { AuthContext, PostContext } from "../../contexts";
+import { BiSolidHeart } from "react-icons/bi";
 
 export default function PostCard({ post }) {
-  const { firstName, lastName, username, content } = post;
+  const { state:{user} } = useContext(AuthContext);
+  const { likePost,dislikePost } = useContext(PostContext);
+
+  const {
+    _id,
+    likes: { likeCount, likedBy },
+    firstName,
+    lastName,
+    username,
+    content,
+  } = post;
+
   return (
     <div className="flex space-x-4 my-4 p-4 bg-white">
       <div>
@@ -18,9 +32,17 @@ export default function PostCard({ post }) {
         </div>
         <p className="line-clamp-6">{content}</p>
         <div className="flex justify-between mt-6">
-          <button>
-            <BsHeart />
-          </button>
+          {likedBy?.some((likedUser) => likedUser?.username 
+          === user.username) ? (
+            <button>
+              <BsFillHeartFill onClick={()=> dislikePost(_id)} />
+            </button>
+          ) : (
+            <button>
+              <BsHeart onClick={() => likePost(_id)} />
+            </button>
+          )}
+
           <button>
             <GoComment />
           </button>
