@@ -2,13 +2,18 @@ import { BiHome, BiUser } from "react-icons/bi";
 import { BsRocket, BsBookmark, BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import ProfileImg from "./profileImg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contexts";
+import CreatePostCard from "./cards/createPostCard";
 export default function Sidebar() {
   const { state } = useContext(AuthContext);
   const {
     user: { firstName, lastName, username },
   } = state;
+  const [isCreatePostVisible, setIsCreatePostVisible] = useState(false);
+
+  const toggleCreatePostCard = () =>
+    setIsCreatePostVisible(!isCreatePostVisible);
   return (
     <li className="fixed top-16 py-12 px-16 list-none flex flex-col justify-between h-screen w-1/4 border">
       <div className="flex flex-col gap-y-4">
@@ -32,7 +37,10 @@ export default function Sidebar() {
             <BiUser /> <span>Profile</span>
           </ul>
         </Link>
-        <button className="bg-blue-600 px-8 py-2 text-gray-100 text-sm">
+        <button
+          onClick={() => setIsCreatePostVisible(true)}
+          className="bg-blue-600 px-8 py-2 text-gray-100 text-sm"
+        >
           Create New Post
         </button>
       </div>
@@ -45,6 +53,13 @@ export default function Sidebar() {
         </div>
         <BsThreeDots className="text-gray-500" />
       </div>
+
+      {isCreatePostVisible && (
+        <CreatePostCard
+          onPost={toggleCreatePostCard}
+          isCreatePostVisible={isCreatePostVisible}
+        />
+      )}
     </li>
   );
 }

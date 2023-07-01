@@ -9,7 +9,7 @@ export default function PostCard({ post }) {
       <div>
         <ProfileImg />
       </div>
-      <div className="pr-8">
+      <div className="pr-8 w-full">
         <div className="flex items-center space-x-2">
           <h5 className="font-semibold">{`${firstName} ${lastName}`}</h5>
           <span className="text-gray-600">{`@${username}`}</span>

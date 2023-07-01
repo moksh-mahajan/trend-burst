@@ -22,6 +22,7 @@ export default function Home() {
       {posts.map((post) => (
         <PostCard post={post} />
       ))}
+      
     </main>
   );
 }
