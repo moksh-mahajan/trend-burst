@@ -1,3 +1,12 @@
 import { AuthContext, AuthProvider } from "./AuthContext";
 import { PostContext, PostProvider } from "./PostContext";
-export { AuthContext, AuthProvider, PostContext, PostProvider };
+import { UserContext, UserProvider } from "./UserContext";
+
+export {
+  AuthContext,
+  AuthProvider,
+  PostContext,
+  PostProvider,
+  UserContext,
+  UserProvider,
+};

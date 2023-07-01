@@ -14,7 +14,7 @@ export default function PostCard({ post }) {
           <h5 className="font-semibold">{`${firstName} ${lastName}`}</h5>
           <span className="text-gray-600">{`@${username}`}</span>
           <span>.</span>
-          <span>1 min</span>
+          <span className="text-gray-600">1 min</span>
         </div>
         <p className="line-clamp-6">{content}</p>
         <div className="flex justify-between mt-6">

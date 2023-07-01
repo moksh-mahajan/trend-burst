@@ -4,4 +4,14 @@ import RequiresAuth from "./requiresAuth/requiresAuth";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
 import PostCard from "./cards/postCard";
-export { LoginForm, SignUpForm, RequiresAuth, Navbar, Sidebar, PostCard };
+import RightSidebar from "./rightSidebar";
+
+export {
+  LoginForm,
+  SignUpForm,
+  RequiresAuth,
+  Navbar,
+  Sidebar,
+  PostCard,
+  RightSidebar,
+};
