@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <button onClick={handleLogout}>Logout</button>
-      <h2>Home Page</h2>
+      <p className="text-3xl font-bold underline">Home Page</p>
     </div>
   );
 }

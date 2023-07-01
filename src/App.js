@@ -1,7 +1,7 @@
 import "./App.css";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./frontend/contexts/AuthContext";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./frontend/pages/Home";
 import Login from "./frontend/pages/login";
 import Signup from "./frontend/pages/signup";
@@ -10,18 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 import RequiresAuth from "./frontend/components/requiresAuth/requiresAuth";
 
 function App() {
-  const { state, handleAuthStatusCheck } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { handleAuthStatusCheck } = useContext(AuthContext);
 
   useEffect(() => {
     handleAuthStatusCheck();
-    {
-      localStorage.getItem("authToken") ? (
-        <Navigate to={"/"} />
-      ) : (
-        <Navigate to={"/login"} />
-      );
-    }
+
+    <Navigate to={localStorage.getItem("authToken") ? "/" : "/login"} />;
   }, []);
 
   return (
