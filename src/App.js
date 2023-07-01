@@ -7,6 +7,7 @@ import Login from "./frontend/pages/login";
 import Signup from "./frontend/pages/signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RequiresAuth from "./frontend/components/requiresAuth/requiresAuth";
 
 function App() {
   const { handleAuthStatusCheck } = useContext(AuthContext);
@@ -28,9 +29,11 @@ function App() {
       />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route element={<RequiresAuth />}>
+          <Route path="/home" element={<Home />} />
+        </Route>
       </Routes>
     </div>
   );

@@ -1,6 +1,7 @@
 import { createContext, useReducer } from "react";
 import { authTokenKey } from "../constants";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -27,7 +28,7 @@ const authReducer = (state, action) => {
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialState);
-
+  const navigate = useNavigate();
   const handleAuthStatusCheck = () => {
     const token = localStorage.getItem(authTokenKey) ?? "";
     dispatch({ type: "AUTH_STATUS_CHECKED", payload: token });
@@ -61,6 +62,7 @@ export function AuthProvider({ children }) {
 
         dispatch({ type: "AUTH_SUCCESS", payload: token });
         toast.success("You are now logged in!");
+        navigate("/home")
       }
       if (response.status === 404) {
         toast.error("Incorrect username or password!");
@@ -95,6 +97,7 @@ export function AuthProvider({ children }) {
         toast.success(
           "Congratulations. Your TrendBurst Account has been created!"
         );
+        navigate("/home");
       }
     } catch (e) {
       console.error(e);
