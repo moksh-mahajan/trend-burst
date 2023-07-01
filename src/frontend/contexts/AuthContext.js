@@ -7,19 +7,22 @@ export const AuthContext = createContext();
 
 const initialState = {
   authToken: "",
+  user: {},
 };
 
 const authReducer = (state, action) => {
-  switch (action.type) {
+  const { payload, type } = action;
+  switch (type) {
     case "AUTH_STATUS_CHECKED":
       return {
-        authToken: action.payload,
+        authToken: payload.token,
+        user: JSON.parse(payload.user),
       };
-    case "AUTHENTICATED":
+    case "AUTH_SUCCESS":
       return {
-        authToken: action.payload,
+        authToken: payload.encodedToken,
+        user: payload.foundUser,
       };
-
     case "LOGGED_OUT": {
       return initialState;
     }
@@ -31,11 +34,13 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
   const handleAuthStatusCheck = () => {
     const token = localStorage.getItem(authTokenKey) ?? "";
-    dispatch({ type: "AUTH_STATUS_CHECKED", payload: token });
+    const user = localStorage.getItem("user") ?? {};
+    dispatch({ type: "AUTH_STATUS_CHECKED", payload: { token, user } });
   };
 
   const handleLogout = () => {
     localStorage.removeItem(authTokenKey);
+    localStorage.removeItem("user");
     dispatch({ type: "LOGGED_OUT" });
     toast.success("Logged out!");
   };
@@ -54,11 +59,12 @@ export function AuthProvider({ children }) {
 
       if (response.status === 200) {
         const data = await response.json();
-        const token = data.encodedToken;
+        const { encodedToken: token, foundUser: user } = data;
         // Save token to local storage
         localStorage.setItem(authTokenKey, token);
+        localStorage.setItem("user", JSON.stringify(user));
 
-        dispatch({ type: "AUTH_SUCCESS", payload: token });
+        dispatch({ type: "AUTH_SUCCESS", payload: data });
         toast.success("You are now logged in!");
         navigate("/", { replace: true });
       }
@@ -84,14 +90,15 @@ export function AuthProvider({ children }) {
 
       if (response.status === 201) {
         const data = await response.json();
-        const token = data.encodedToken;
+        const { encodedToken: token, foundUser: user } = data;
 
         console.log("Token gotten from signup: ", token);
 
         // Save token to local storage
         localStorage.setItem(authTokenKey, token);
+        localStorage.setItem("user", JSON.stringify(user));
 
-        dispatch({ type: "AUTH_SUCCESS", payload: token });
+        dispatch({ type: "AUTH_SUCCESS", payload: data });
         toast.success(
           "Congratulations. Your TrendBurst Account has been created!"
         );

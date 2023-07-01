@@ -1,4 +1,6 @@
 import LoginForm from "./forms/authForms/loginForm";
 import SignUpForm from "./forms/authForms/signupForm";
-
-export { LoginForm, SignUpForm };
+import RequiresAuth from "./requiresAuth/requiresAuth";
+import Navbar from "./navbar";
+import Sidebar from "./sidebar";
+export { LoginForm, SignUpForm, RequiresAuth, Navbar, Sidebar };

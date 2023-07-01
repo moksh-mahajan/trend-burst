@@ -7,7 +7,7 @@ import Login from "./frontend/pages/login";
 import Signup from "./frontend/pages/signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import RequiresAuth from "./frontend/components/requiresAuth/requiresAuth";
+import { Navbar, RequiresAuth, Sidebar } from "./frontend/components";
 
 function App() {
   const { handleAuthStatusCheck } = useContext(AuthContext);
@@ -20,6 +20,8 @@ function App() {
 
   return (
     <div>
+      <Navbar />
+      <Sidebar />
       <ToastContainer
         style={{ fontSize: "1.4rem" }}
         position="bottom-right"
