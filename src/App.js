@@ -21,7 +21,6 @@ function App() {
   return (
     <div>
       <Navbar />
-      <Sidebar />
       <ToastContainer
         style={{ fontSize: "1.4rem" }}
         position="bottom-right"
@@ -31,13 +30,16 @@ function App() {
         closeOnClick
       />
 
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route element={<RequiresAuth />}>
-          <Route path="/" element={<Home />} />
-        </Route>
-      </Routes>
+      <div className="flex">
+        <Sidebar />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route element={<RequiresAuth />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+        </Routes>
+      </div>
     </div>
   );
 }

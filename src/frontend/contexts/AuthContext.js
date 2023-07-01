@@ -55,8 +55,6 @@ export function AuthProvider({ children }) {
         }),
       });
 
-      console.log(response);
-
       if (response.status === 200) {
         const data = await response.json();
         const { encodedToken: token, foundUser: user } = data;

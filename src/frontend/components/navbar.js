@@ -6,7 +6,7 @@ export default function Navbar() {
   const { handleLogout } = useContext(AuthContext);
 
   return (
-    <div className="p-4 pl-20 bg-white flex justify-between">
+    <div className="z-10 sticky top-0 p-4 pl-20 bg-white flex justify-between">
       <Link to={"/"} className="text-2xl font-semibold">
         <span className="text-blue-700">Trend</span>Burst
       </Link>

@@ -6,12 +6,11 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts";
 export default function Sidebar() {
   const { state } = useContext(AuthContext);
-  console.log(state);
   const {
     user: { firstName, lastName, username },
   } = state;
   return (
-    <li className="py-12 px-16 list-none flex flex-col justify-between h-screen w-1/4 border">
+    <li className="fixed top-16 py-12 px-16 list-none flex flex-col justify-between h-screen w-1/4 border">
       <div className="flex flex-col gap-y-4">
         <Link to={"/"}>
           <ul className="flex items-center space-x-3">
