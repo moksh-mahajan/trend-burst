@@ -8,6 +8,8 @@ export default function RightSidebar() {
   const {
     state: { users, isLoading },
     getUsers,
+    followUser,
+    unfollowUser,
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -35,21 +37,40 @@ export default function RightSidebar() {
           <div className="bg-white p-4">
             <h4>Who to Follow?</h4>
             <ul>
-              {peopleToFollow.map(({ firstName, lastName, username }) => (
-                <div className="flex my-4 justify-between">
-                  <div className="flex space-x-3">
-                    <ProfileImg />
+              {peopleToFollow.map(
+                ({ _id, firstName, lastName, username, followers }) => (
+                  <div className="flex my-4 justify-between">
+                    <div className="flex space-x-3">
+                      <ProfileImg />
+                      <div>
+                        <h5 className="font-semibold">{`${firstName} ${lastName}`}</h5>
+                        <span className="text-gray-600">{`@${username}`}</span>
+                      </div>
+                    </div>
                     <div>
-                      <h5 className="font-semibold">{`${firstName} ${lastName}`}</h5>
-                      <span className="text-gray-600">{`@${username}`}</span>
+                      {followers.some(
+                        ({ username }) => state.user.username === username
+                      ) ? (
+                        <button
+                          onClick={() => unfollowUser(_id)}
+                          className="flex items-center text-blue-600"
+                        >
+                          Unfollow
+                          <BsPlus />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => followUser(_id)}
+                          className="flex items-center text-blue-600"
+                        >
+                          Follow
+                          <BsPlus />
+                        </button>
+                      )}
                     </div>
                   </div>
-                  <button className="flex items-center text-blue-600">
-                    Follow
-                    <BsPlus />
-                  </button>
-                </div>
-              ))}
+                )
+              )}
             </ul>
           </div>
         </div>
