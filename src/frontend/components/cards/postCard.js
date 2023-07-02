@@ -1,13 +1,25 @@
 import { useContext } from "react";
 import ProfileImg from "../profileImg";
-import { BsBookmark, BsFillHeartFill, BsHeart, BsShare } from "react-icons/bs";
+import {
+  BsBookmark,
+  BsFillBookmarkFill,
+  BsFillHeartFill,
+  BsHeart,
+  BsShare,
+} from "react-icons/bs";
 import { GoComment } from "react-icons/go";
-import { AuthContext, PostContext } from "../../contexts";
-import { BiSolidHeart } from "react-icons/bi";
+import { AuthContext, PostContext, UserContext } from "../../contexts";
 
 export default function PostCard({ post }) {
-  const { state:{user} } = useContext(AuthContext);
-  const { likePost,dislikePost } = useContext(PostContext);
+  const {
+    state: { user },
+  } = useContext(AuthContext);
+  const { likePost, dislikePost } = useContext(PostContext);
+  const {
+    state: { bookmarks },
+    addBookmark,
+    removeBookmark,
+  } = useContext(UserContext);
 
   const {
     _id,
@@ -32,16 +44,17 @@ export default function PostCard({ post }) {
         </div>
         <p className="line-clamp-6">{content}</p>
         <div className="flex justify-between mt-6">
-          {likedBy?.some((likedUser) => likedUser?.username 
-          === user.username) ? (
+          <>
+          {likedBy.some((likedUser) => likedUser.username === user.username) ? (
             <button>
-              <BsFillHeartFill onClick={()=> dislikePost(_id)} />
+              <BsFillHeartFill onClick={() => dislikePost(_id)} />
             </button>
           ) : (
             <button>
               <BsHeart onClick={() => likePost(_id)} />
             </button>
           )}
+          </>
 
           <button>
             <GoComment />
@@ -49,9 +62,17 @@ export default function PostCard({ post }) {
           <button>
             <BsShare />
           </button>
-          <button>
-            <BsBookmark />
-          </button>
+          <>
+          {bookmarks.some((bookmarkedPost) => bookmarkedPost._id === _id) ? (
+            <button>
+              <BsFillBookmarkFill onClick={() => removeBookmark(_id)} />
+            </button>
+          ) : (
+            <button onClick={() => addBookmark(_id)}>
+              <BsBookmark />
+            </button>
+          )}
+          </>
         </div>
       </div>
     </div>

@@ -13,7 +13,9 @@ export default function CreatePostCard({ onPost, isCreatePostVisible }) {
     if (postContent) {
       createPost({ content: postContent });
       setPostContent("");
-      onPost();
+      if(isCreatePostVisible){
+        onPost();
+      }
     } else {
       toast.warning("Post can't be empty!");
     }
@@ -21,7 +23,7 @@ export default function CreatePostCard({ onPost, isCreatePostVisible }) {
 
   return (
     <div
-      onClick={onPost}
+      onClick={isCreatePostVisible ? onPost : null}
       className={
         isCreatePostVisible
           ? `bg-blue-100 bg-opacity-70 fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center`

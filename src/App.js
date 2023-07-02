@@ -1,13 +1,18 @@
 import "./App.css";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./frontend/contexts/AuthContext";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./frontend/pages/Home";
 import Login from "./frontend/pages/login";
 import Signup from "./frontend/pages/signup";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Navbar, RequiresAuth, RightSidebar, Sidebar } from "./frontend/components";
+import {
+  Navbar,
+  RequiresAuth,
+  RightSidebar,
+  Sidebar,
+} from "./frontend/components";
 
 function App() {
   const { handleAuthStatusCheck } = useContext(AuthContext);
@@ -17,7 +22,7 @@ function App() {
 
     <Navigate to={localStorage.getItem("authToken") ? "/" : "/login"} />;
   }, []);
-
+  const location = useLocation();
   return (
     <div>
       <Navbar />
@@ -31,7 +36,7 @@ function App() {
       />
 
       <div className="flex">
-        <Sidebar />
+        {location.pathname == ("/login" || "/signup") ? <></> : <Sidebar />}
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -39,7 +44,12 @@ function App() {
             <Route path="/" element={<Home />} />
           </Route>
         </Routes>
-        <RightSidebar />
+
+        {location.pathname == ("/login" || "/signup") ? (
+          <></>
+        ) : (
+          <RightSidebar />
+        )}
       </div>
     </div>
   );

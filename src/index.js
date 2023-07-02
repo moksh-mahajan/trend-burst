@@ -7,7 +7,10 @@ import { makeServer } from "./server";
 import { AuthProvider } from "./frontend/contexts/AuthContext";
 
 import { BrowserRouter as Router } from "react-router-dom";
-import { PostProvider, UserProvider } from "./frontend/contexts";
+import {
+  PostProvider,
+  UserProvider,
+} from "./frontend/contexts";
 
 // Call make Server
 makeServer();
