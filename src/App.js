@@ -14,6 +14,7 @@ import {
 } from "./frontend/components";
 import Explore from "./frontend/pages/Explore";
 import { AuthContext, PostContext } from "./frontend/contexts";
+import Bookmark from "./frontend/pages/Bookmark";
 
 function App() {
   const { handleAuthStatusCheck } = useContext(AuthContext);
@@ -51,6 +52,7 @@ function App() {
           <Route element={<RequiresAuth />}>
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/bookmark" element={<Bookmark />}/>
           </Route>
         </Routes>
 

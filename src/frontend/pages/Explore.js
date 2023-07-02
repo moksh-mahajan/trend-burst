@@ -1,14 +1,16 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AuthContext, PostContext } from "../contexts";
-import { CreatePostCard, PostCard } from "../components";
+import { PostCard } from "../components";
 
 export default function Explore() {
-    const { state:{user} } = useContext(AuthContext);
+  const {
+    state: { user },
+  } = useContext(AuthContext);
   const {
     state: { posts, isLoading },
   } = useContext(PostContext);
 
-  const othersPosts = posts.filter((post)=>post.username === user.username);
+  const othersPosts = posts.filter((post) => post.username === user.username);
   return isLoading ? (
     <>Loading...</>
   ) : (
