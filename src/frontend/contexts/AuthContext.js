@@ -16,7 +16,7 @@ const authReducer = (state, action) => {
     case "AUTH_STATUS_CHECKED":
       return {
         authToken: payload.token,
-        user: payload.user,
+        user: JSON.parse(payload.user),
       };
     case "AUTH_SUCCESS":
       return {

@@ -5,21 +5,20 @@ export const PostContext = createContext();
 
 const initialState = {
   posts: [],
-  isLoading:true,
+  isLoading: true,
 };
 
 const postReducer = (state, action) => {
   switch (action.type) {
     case "SET_POSTS":
-      return { posts: action.payload,isLoading:false };
+      return { posts: action.payload, isLoading: false };
     default:
       return state;
   }
 };
 
 export function PostProvider({ children }) {
-
-  const [ state, dispatch ] = useReducer(postReducer, initialState);
+  const [state, dispatch] = useReducer(postReducer, initialState);
 
   const getPosts = async () => {
     try {
@@ -33,15 +32,14 @@ export function PostProvider({ children }) {
       console.error(e);
     }
   };
-  const createPost = async(postData) => {
-    console.log(postData)
+  const createPost = async (postData) => {
     try {
       const token = localStorage.getItem(authTokenKey);
       const headers = new Headers();
       headers.append("Authorization", "Bearer " + token);
       const response = await fetch("/api/posts", {
         method: "POST",
-        body: JSON.stringify({postData}),
+        body: JSON.stringify({ postData }),
         headers,
       });
       console.log(response);
@@ -51,12 +49,53 @@ export function PostProvider({ children }) {
         dispatch({ type: "SET_POSTS", payload: data.posts });
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
-  const likePost = async(postId) => {
-    console.log(postId)
+  const editPost = async (postId, postData) => {
+    try {
+      const token = localStorage.getItem(authTokenKey);
+      console.log(token);
+      const headers = new Headers();
+      headers.append("Authorization", "Bearer " + token);
+      const response = await fetch(`/api/posts/edit/${postId}`, {
+        method: "POST",
+        body: JSON.stringify({ postData }),
+        headers,
+      });
+      console.log(response);
+      if (response.status === 201) {
+        const data = await response.json();
+        console.log(data);
+        dispatch({ type: "SET_POSTS", payload: data.posts });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const deletePost = async (postId, postData) => {
+    try {
+      const token = localStorage.getItem(authTokenKey);
+      const headers = new Headers();
+      headers.append("Authorization", "Bearer " + token);
+      const response = await fetch(`/api/posts/${postId}`, {
+        method: "DELETE",
+        headers,
+      });
+      console.log(response);
+      if (response.status === 201) {
+        const data = await response.json();
+        console.log(data);
+        dispatch({ type: "SET_POSTS", payload: data.posts });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const likePost = async (postId) => {
     try {
       const token = localStorage.getItem(authTokenKey);
       const headers = new Headers();
@@ -72,11 +111,10 @@ export function PostProvider({ children }) {
         dispatch({ type: "SET_POSTS", payload: data.posts });
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
-  const dislikePost = async(postId) => {
-    console.log(postId)
+  };
+  const dislikePost = async (postId) => {
     try {
       const token = localStorage.getItem(authTokenKey);
       const headers = new Headers();
@@ -92,11 +130,21 @@ export function PostProvider({ children }) {
         dispatch({ type: "SET_POSTS", payload: data.posts });
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
   return (
-    <PostContext.Provider value={{ state, getPosts,createPost,likePost,dislikePost }}>
+    <PostContext.Provider
+      value={{
+        state,
+        getPosts,
+        createPost,
+        editPost,
+        deletePost,
+        likePost,
+        dislikePost,
+      }}
+    >
       {children}
     </PostContext.Provider>
   );

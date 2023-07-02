@@ -3,17 +3,29 @@ import ProfileImg from "../profileImg";
 import { BsEmojiLaughing, BsFiletypeGif } from "react-icons/bs";
 import { HiOutlinePhoto } from "react-icons/hi2";
 import { toast } from "react-toastify";
-import { PostContext } from "../../contexts";
+import { AuthContext, PostContext } from "../../contexts";
 
-export default function CreatePostCard({ onPost, isCreatePostVisible }) {
-  const { createPost } = useContext(PostContext);
-  const [postContent, setPostContent] = useState("");
+export default function CreatePostCard({ post, onPost, isCreatePostVisible }) {
+  const { createPost, editPost } = useContext(PostContext);
+  const [postContent, setPostContent] = useState(post ? post.content : "");
+  const {
+    state: { user },
+  } = useContext(AuthContext);
 
-  const createPostHandler = () => {
+  const handlePostHandler = () => {
     if (postContent) {
-      createPost({ content: postContent });
+      post
+        ? editPost(post._id, {
+            content: postContent,
+          })
+        : createPost({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            content: postContent,
+          });
       setPostContent("");
-      if(isCreatePostVisible){
+      if (isCreatePostVisible) {
         onPost();
       }
     } else {
@@ -59,7 +71,7 @@ export default function CreatePostCard({ onPost, isCreatePostVisible }) {
               </button>
             </div>
             <button
-              onClick={createPostHandler}
+              onClick={handlePostHandler}
               className="px-8 py-1 text-sm bg-blue-600 text-gray-100"
             >
               Post
