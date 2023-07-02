@@ -1,25 +1,22 @@
 import { useContext, useEffect } from "react";
-import { PostContext } from "../contexts";
+import { AuthContext, PostContext } from "../contexts";
 import { CreatePostCard, PostCard } from "../components";
 
-export default function Home() {
+export default function Explore() {
+    const { state:{user} } = useContext(AuthContext);
   const {
     state: { posts, isLoading },
-    getPosts,
   } = useContext(PostContext);
 
-
-  console.log(posts);
+  const othersPosts = posts.filter((post)=>post.username === user.username);
   return isLoading ? (
     <>Loading...</>
   ) : (
     <main className="w-1/2 ml-96 my-12">
-      <CreatePostCard />
-      <h2 className="text-xl font-semibold">Latest Posts</h2>
-      {posts.map((post) => (
+      <h2 className="text-xl font-semibold">Explore</h2>
+      {othersPosts.map((post) => (
         <PostCard post={post} />
       ))}
-      
     </main>
   );
 }

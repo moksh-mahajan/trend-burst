@@ -1,6 +1,5 @@
 import "./App.css";
 import { useContext, useEffect } from "react";
-import { AuthContext } from "./frontend/contexts/AuthContext";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./frontend/pages/Home";
 import Login from "./frontend/pages/login";
@@ -13,15 +12,24 @@ import {
   RightSidebar,
   Sidebar,
 } from "./frontend/components";
+import Explore from "./frontend/pages/Explore";
+import { AuthContext, PostContext } from "./frontend/contexts";
 
 function App() {
   const { handleAuthStatusCheck } = useContext(AuthContext);
-
+  const {
+    getPosts,
+  } = useContext(PostContext);
   useEffect(() => {
     handleAuthStatusCheck();
 
     <Navigate to={localStorage.getItem("authToken") ? "/" : "/login"} />;
   }, []);
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
   const location = useLocation();
   return (
     <div>
@@ -42,6 +50,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route element={<RequiresAuth />}>
             <Route path="/" element={<Home />} />
+            <Route path="/explore" element={<Explore />} />
           </Route>
         </Routes>
 
