@@ -36,7 +36,7 @@ function App() {
     <div>
       <Navbar />
       <ToastContainer
-        style={{ fontSize: "1.4rem" }}
+        style={{ fontSize: "0.8rem" }}
         position="bottom-right"
         autoClose={1000}
         hideProgressBar={false}

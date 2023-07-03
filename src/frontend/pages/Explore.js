@@ -10,7 +10,7 @@ export default function Explore() {
     state: { posts, isLoading },
   } = useContext(PostContext);
 
-  const othersPosts = posts.filter((post) => post.username === user.username);
+  const othersPosts = posts.filter((post) => post.username !== user.username);
   return isLoading ? (
     <>Loading...</>
   ) : (
