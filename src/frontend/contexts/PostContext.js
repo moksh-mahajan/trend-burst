@@ -12,6 +12,13 @@ const postReducer = (state, action) => {
   switch (action.type) {
     case "SET_POSTS":
       return { posts: action.payload, isLoading: false };
+    case "SORT_BY_TRENDING":
+      console.log("TRENDINGGNGNG");
+      state.posts.sort((a, b) => b.likes.likeCount - a.likes.likeCount);
+      return { ...state };
+    case "SORT_BY_LATEST":
+      state.posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      return { ...state };
     default:
       return state;
   }
@@ -137,6 +144,7 @@ export function PostProvider({ children }) {
     <PostContext.Provider
       value={{
         state,
+        dispatch,
         getPosts,
         createPost,
         editPost,
