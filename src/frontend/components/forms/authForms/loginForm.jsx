@@ -1,18 +1,20 @@
 import { useContext, useState } from "react";
-// import authImg from "../../../assets/svgs/authImg.svg";
 import { AuthContext } from "../../../contexts";
-// import "./AuthForm.css";
 
 export default function LoginForm({ onSignUp }) {
   const [form, setForm] = useState({});
   const { handleLogin } = useContext(AuthContext);
-
+  const handleGuestLogin = () => {
+    handleLogin({ username: "adarshbalika", password: "adarshBalika123" });
+  };
+  const handleFormLogin = () => {
+    handleLogin(form);
+  };
   return (
     <div className="auth-section">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleLogin(form);
         }}
         className="auth-form"
       >
@@ -43,9 +45,16 @@ export default function LoginForm({ onSignUp }) {
           />
         </div>
 
-        <div className="auth-footer">
-          <button type="submit" className="auth-btn">
+        <div className="flex gap-x-4">
+          <button
+            onClick={() => handleFormLogin()}
+            type="submit"
+            className="auth-btn"
+          >
             Login
+          </button>
+          <button onClick={() => handleGuestLogin()} className="auth-btn">
+            Guest Login
           </button>
           <span>Don't have an account?</span>
           <button onClick={onSignUp} type="button" className="auth-link">

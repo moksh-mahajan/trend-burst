@@ -16,7 +16,7 @@ const authReducer = (state, action) => {
     case "AUTH_STATUS_CHECKED":
       return {
         authToken: payload.token,
-        user: JSON.parse(payload.user),
+        user: payload.user,
       };
     case "AUTH_SUCCESS":
       return {
@@ -34,8 +34,11 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
   const handleAuthStatusCheck = () => {
     const token = localStorage.getItem(authTokenKey) ?? "";
-    const user = localStorage.getItem("user") ?? {};
-    dispatch({ type: "AUTH_STATUS_CHECKED", payload: { token, user } });
+    const user = localStorage.getItem("user");
+    dispatch({
+      type: "AUTH_STATUS_CHECKED",
+      payload: { token, user: user === null ? {} : JSON.parse(user) },
+    });
   };
 
   const handleLogout = () => {
@@ -54,7 +57,6 @@ export function AuthProvider({ children }) {
           password,
         }),
       });
-
       if (response.status === 200) {
         const data = await response.json();
         const { encodedToken: token, foundUser: user } = data;
