@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import ProfileImg from "../profileImg";
+import { formatDistanceToNow } from "date-fns";
 import {
   BsBookmark,
   BsFillBookmarkFill,
@@ -11,6 +12,12 @@ import {
 import { GoComment } from "react-icons/go";
 import { AuthContext, PostContext, UserContext } from "../../contexts";
 import CreatePostCard from "./createPostCard";
+
+function TimeAgo({ timestamp }) {
+  const timeAgo = formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+
+  return <span>{timeAgo}</span>;
+}
 
 export default function PostCard({ post }) {
   const {
@@ -53,7 +60,7 @@ export default function PostCard({ post }) {
             <h5 className="font-semibold">{`${firstName} ${lastName}`}</h5>
             <span className="text-gray-600">{`@${username}`}</span>
             <span>.</span>
-            <span className="text-gray-600">1 min</span>
+            <span className="text-gray-600"><TimeAgo timestamp={post.createdAt} /></span>
           </div>
           <div className="relative">
             <button
@@ -95,19 +102,24 @@ export default function PostCard({ post }) {
         </div>
         <p className="line-clamp-6 break-words">{content}</p>
         <div className="flex justify-between mt-6">
-          <>
+          <button className="flex items-center gap-x-1">
             {likedBy.some(
               (likedUser) => likedUser.username === user.username
             ) ? (
-              <button>
-                <BsFillHeartFill onClick={() => dislikePost(_id)} />
-              </button>
+              <>
+                <BsFillHeartFill
+                  className="text-red-500"
+                  onClick={() => dislikePost(_id)}
+                />
+                <div className="text-red-500">{likeCount}</div>
+              </>
             ) : (
-              <button>
+              <>
                 <BsHeart onClick={() => likePost(_id)} />
-              </button>
+                <div>{likeCount}</div>
+              </>
             )}
-          </>
+          </button>
 
           <button>
             <GoComment />
