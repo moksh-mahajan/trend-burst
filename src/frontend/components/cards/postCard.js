@@ -46,6 +46,8 @@ export default function PostCard({ post }) {
   const toggleCreatePostCard = () =>
     setIsCreatePostVisible(!isCreatePostVisible);
 
+  const isMyPost = user.username === username;
+
   return (
     <div
       onClick={() => setShowMore(false)}
@@ -60,45 +62,49 @@ export default function PostCard({ post }) {
             <h5 className="font-semibold">{`${firstName} ${lastName}`}</h5>
             <span className="text-gray-600">{`@${username}`}</span>
             <span>.</span>
-            <span className="text-gray-600"><TimeAgo timestamp={post.createdAt} /></span>
+            <span className="text-gray-600">
+              <TimeAgo timestamp={post.createdAt} />
+            </span>
           </div>
-          <div className="relative">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowMore(!showMore);
-              }}
-            >
-              <BsThreeDots />
-            </button>
-            {showMore && user.username === username ? (
-              <div
-                onClick={(e) => e.stopPropagation()}
-                className="absolute top-4 left-6 bg-gray-300 py-1 px-4"
+          {isMyPost && (
+            <div className="relative">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMore(!showMore);
+                }}
               >
-                <button
-                  onClick={() => {
-                    setIsCreatePostVisible(true);
-                    setShowMore(false);
-                  }}
-                  className="text-blue-800 p-1 font-semibold"
+                <BsThreeDots />
+              </button>
+              {showMore && user.username === username ? (
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="absolute top-4 left-6 bg-gray-300 py-1 px-4"
                 >
-                  Edit
-                </button>
-                <button
-                  onClick={() => {
-                    deletePost(_id);
-                    setShowMore(false);
-                  }}
-                  className="text-blue-800 p-1 font-semibold"
-                >
-                  Delete
-                </button>
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
+                  <button
+                    onClick={() => {
+                      setIsCreatePostVisible(true);
+                      setShowMore(false);
+                    }}
+                    className="text-blue-800 p-1 font-semibold"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      deletePost(_id);
+                      setShowMore(false);
+                    }}
+                    className="text-blue-800 p-1 font-semibold"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
+          )}
         </div>
         <p className="line-clamp-6 break-words">{content}</p>
         <div className="flex justify-between mt-6">
