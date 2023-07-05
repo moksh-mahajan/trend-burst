@@ -4,11 +4,20 @@ import { CreatePostCard, PostCard } from "../components";
 
 export default function Home() {
   const {
-    state: { posts, isLoading },
+    state: { posts, isLoading, sortBy },
     dispatch,
   } = useContext(PostContext);
 
-  console.log(posts);
+  let sortedPosts = posts;
+
+  if (sortBy === "trending") {
+    sortedPosts = posts.sort((a, b) => b.likes.likeCount - a.likes.likeCount);
+  } else if (sortBy === "latest") {
+    sortedPosts = posts.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+  }
+
   return isLoading ? (
     <>Loading...</>
   ) : (
@@ -21,7 +30,7 @@ export default function Home() {
       <button onClick={() => dispatch({ type: "SORT_BY_LATEST" })}>
         Latest
       </button>
-      {posts.map((post) => (
+      {sortedPosts.map((post) => (
         <PostCard post={post} />
       ))}
     </main>

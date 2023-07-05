@@ -6,19 +6,17 @@ export const PostContext = createContext();
 const initialState = {
   posts: [],
   isLoading: true,
+  sortBy: "latest",
 };
 
 const postReducer = (state, action) => {
   switch (action.type) {
     case "SET_POSTS":
-      return { posts: action.payload, isLoading: false };
+      return { ...state, posts: action.payload, isLoading: false };
     case "SORT_BY_TRENDING":
-      console.log("TRENDINGGNGNG");
-      state.posts.sort((a, b) => b.likes.likeCount - a.likes.likeCount);
-      return { ...state };
+      return { ...state, sortBy: "trending" };
     case "SORT_BY_LATEST":
-      state.posts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      return { ...state };
+      return { ...state, sortBy: "latest" };
     default:
       return state;
   }
