@@ -7,14 +7,12 @@ export default function RightSidebar() {
   const { state } = useContext(AuthContext);
   const {
     state: { users, isLoading },
-    getUsers,
+  
     followUser,
     unfollowUser,
   } = useContext(UserContext);
 
-  useEffect(() => {
-    getUsers();
-  }, []);
+  
 
   const peopleToFollow = users?.filter(
     (user) => user.username !== state.user.username

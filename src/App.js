@@ -13,14 +13,14 @@ import {
   Sidebar,
 } from "./frontend/components";
 import Explore from "./frontend/pages/Explore";
-import { AuthContext, PostContext } from "./frontend/contexts";
+import { AuthContext, PostContext, UserContext } from "./frontend/contexts";
 import Bookmark from "./frontend/pages/Bookmark";
+import Profile from "./frontend/pages/profile";
 
 function App() {
   const { handleAuthStatusCheck } = useContext(AuthContext);
-  const {
-    getPosts,
-  } = useContext(PostContext);
+  const { getPosts } = useContext(PostContext);
+  const { getUsers } = useContext(UserContext);
   useEffect(() => {
     handleAuthStatusCheck();
 
@@ -28,6 +28,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    getUsers();
     getPosts();
   }, []);
 
@@ -52,7 +53,8 @@ function App() {
           <Route element={<RequiresAuth />}>
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
-            <Route path="/bookmark" element={<Bookmark />}/>
+            <Route path="/bookmark" element={<Bookmark />} />
+            <Route path="/profile/:username" element={<Profile />} />
           </Route>
         </Routes>
 

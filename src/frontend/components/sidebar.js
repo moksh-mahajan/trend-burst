@@ -32,7 +32,7 @@ export default function Sidebar() {
             <BsBookmark /> <span>Bookmark</span>
           </ul>
         </Link>
-        <Link to={"/profile"}>
+        <Link to={`/profile/${username}`}>
           <ul className="flex items-center space-x-3">
             <BiUser /> <span>Profile</span>
           </ul>
