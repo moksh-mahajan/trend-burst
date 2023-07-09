@@ -97,7 +97,6 @@ export const UserProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
         dispatch({ type: "SET_BOOKMARKS", payload: data.bookmarks });
       }
     } catch (e) {

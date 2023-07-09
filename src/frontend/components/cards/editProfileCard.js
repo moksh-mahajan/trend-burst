@@ -3,7 +3,6 @@ import ProfileImg from "../profileImg";
 import { UserContext } from "../../contexts";
 
 export default function EditProfileCard({ user, setShowEditProfileModel }) {
-  console.log("user", user);
   const [userData, setUserData] = useState({
     bio: user.bio,
     portfolioUrl: user.portfolioUrl,

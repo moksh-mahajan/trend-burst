@@ -47,10 +47,8 @@ export function PostProvider({ children }) {
         body: JSON.stringify({ postData }),
         headers,
       });
-      console.log(response);
       if (response.status === 201) {
         const data = await response.json();
-        console.log(data);
         dispatch({ type: "SET_POSTS", payload: data.posts });
       }
     } catch (e) {
@@ -61,7 +59,6 @@ export function PostProvider({ children }) {
   const editPost = async (postId, postData) => {
     try {
       const token = localStorage.getItem(authTokenKey);
-      console.log(token);
       const headers = new Headers();
       headers.append("Authorization", "Bearer " + token);
       const response = await fetch(`/api/posts/edit/${postId}`, {
@@ -69,10 +66,8 @@ export function PostProvider({ children }) {
         body: JSON.stringify({ postData }),
         headers,
       });
-      console.log(response);
       if (response.status === 201) {
         const data = await response.json();
-        console.log(data);
         dispatch({ type: "SET_POSTS", payload: data.posts });
       }
     } catch (e) {
@@ -89,10 +84,8 @@ export function PostProvider({ children }) {
         method: "DELETE",
         headers,
       });
-      console.log(response);
       if (response.status === 201) {
         const data = await response.json();
-        console.log(data);
         dispatch({ type: "SET_POSTS", payload: data.posts });
       }
     } catch (e) {
@@ -109,10 +102,8 @@ export function PostProvider({ children }) {
         method: "POST",
         headers,
       });
-      console.log(response);
       if (response.status === 201) {
         const data = await response.json();
-        console.log(data);
         dispatch({ type: "SET_POSTS", payload: data.posts });
       }
     } catch (e) {
@@ -128,10 +119,8 @@ export function PostProvider({ children }) {
         method: "POST",
         headers,
       });
-      console.log(response);
       if (response.status === 201) {
         const data = await response.json();
-        console.log(data);
         dispatch({ type: "SET_POSTS", payload: data.posts });
       }
     } catch (e) {

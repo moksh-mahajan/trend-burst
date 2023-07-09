@@ -23,8 +23,7 @@ export default function PostCard({ post }) {
   const {
     state: { user },
   } = useContext(AuthContext);
-  const { likePost, dislikePost, editPost, deletePost } =
-    useContext(PostContext);
+  const { likePost, dislikePost, deletePost } = useContext(PostContext);
   const {
     state: { bookmarks },
     addBookmark,

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { BsPlus, BsSearch } from "react-icons/bs";
 import { AuthContext, UserContext } from "../contexts";
 import ProfileImg from "./profileImg";
@@ -37,7 +37,7 @@ export default function RightSidebar() {
             <ul>
               {peopleToFollow.map(
                 ({ _id, firstName, lastName, username, followers }) => (
-                  <div className="flex my-4 justify-between">
+                  <div key={_id} className="flex my-4 justify-between">
                     <div className="flex space-x-3">
                       <ProfileImg />
                       <div>
