@@ -11,55 +11,59 @@ export default function LoginForm({ onSignUp }) {
     handleLogin(form);
   };
   return (
-    <div className="auth-section">
+    <div className="w-full mt-12 flex justify-center items-center">
       <form
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="auth-form"
+        className="w-1/3 flex justify-center items-center flex-col bg-white p-6"
       >
-        <div className="auth-heading">
-          <h3>Login</h3>
-          {/* <img className="auth-img" src={authImg} alt="authentication img" /> */}
-        </div>
+        <h3 className="text-2xl font-semibold">Login</h3>
 
-        <div className="auth-input">
+        <div className="w-full flex flex-col space-y-1">
           <label htmlFor="email">Username</label>
           <input
             onChange={(e) => setForm({ ...form, username: e.target.value })}
-            className="auth-field"
+            className="p-2"
             type="username"
             id="username"
             placeholder="Username"
           />
         </div>
 
-        <div className="auth-input">
+        <div className="w-full flex flex-col space-y-1">
           <label htmlFor="password">Password</label>
           <input
             onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className="auth-field"
+            className="p-2"
             type="password"
             id="password"
             placeholder="*******"
           />
         </div>
 
-        <div className="flex gap-x-4">
-          <button
-            onClick={() => handleFormLogin()}
-            type="submit"
-            className="auth-btn"
-          >
-            Login
-          </button>
-          <button onClick={() => handleGuestLogin()} className="auth-btn">
-            Guest Login
-          </button>
-          <span>Don't have an account?</span>
-          <button onClick={onSignUp} type="button" className="auth-link">
-            Signup
-          </button>
+        <div className="w-full flex flex-col gap-x-4">
+          <div className="flex flex-col my-4 space-y-4">
+            <button
+              onClick={() => handleFormLogin()}
+              type="submit"
+              className="bg-blue-600 text-white py-2"
+            >
+              Login
+            </button>
+            <button
+              onClick={() => handleGuestLogin()}
+              className="text-blue-600 border border-blue-600 py-2"
+            >
+              Guest Login
+            </button>
+          </div>
+          <div className="space-x-1">
+            <span>Don't have an account?</span>
+            <button onClick={onSignUp} type="button" className="text-blue-600">
+              Signup
+            </button>
+          </div>
         </div>
       </form>
     </div>

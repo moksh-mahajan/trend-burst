@@ -1,7 +1,5 @@
 import { useContext, useState } from "react";
-// import authImg from "../../../assets/svgs/authImg.svg";
 import { AuthContext } from "../../../contexts";
-// import "./AuthForm.css";
 
 export default function SignUpForm({ onLogin }) {
   const [form, setForm] = useState({});
@@ -9,25 +7,22 @@ export default function SignUpForm({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="auth-section">
+    <div className="w-full mt-12 flex justify-center items-center">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleSignUp(form);
         }}
-        className="auth-form"
+        className="w-1/3 flex justify-center items-center flex-col bg-white p-6"
       >
-        <div className="auth-heading">
-          <h3>Sign-up</h3>
-          {/* <img className="auth-img" src={authImg} alt="authentication img" /> */}
-        </div>
+        <h3 className="text-2xl font-semibold">Sign-up</h3>
 
-        <div className="two-field-section">
-          <div className="auth-input">
+        <div className="w-full flex space-x-3">
+          <div className="w-1/2 flex flex-col space-y-1">
             <label htmlFor="username">Firstname</label>
             <input
               onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-              className="auth-field"
+              className="p-2 bg-blue-100"
               required
               type="text"
               id="Firstname"
@@ -35,22 +30,24 @@ export default function SignUpForm({ onLogin }) {
             />
           </div>
 
-          <div className="auth-input">
+          <div className="w-1/2 flex flex-col space-y-1">
             <label htmlFor="username">Lastname</label>
             <input
               onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-              className="auth-field"
+              className="p-2 bg-blue-100"
               type="text"
               id="Lastname"
               placeholder="Lastname"
             />
           </div>
         </div>
-        <div className="auth-input">
+
+        
+        <div className="w-full flex flex-col space-y-1">
           <label htmlFor="signup-email">Email</label>
           <input
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="auth-field"
+            className="p-2"
             required
             type="email"
             id="signup-email"
@@ -58,11 +55,11 @@ export default function SignUpForm({ onLogin }) {
           />
         </div>
 
-        <div className="auth-input">
+        <div className="w-full flex flex-col space-y-1">
           <label htmlFor="signup-password">Password</label>
           <input
             onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className="auth-field"
+            className="p-2"
             required
             type={showPassword ? "text" : "password"}
             id="signup-password"
@@ -70,21 +67,23 @@ export default function SignUpForm({ onLogin }) {
           />
         </div>
 
-        <div className="auth-input auth-checkbox">
+        <div className="w-full my-3 space-x-1">
           <input
             onChange={() => setShowPassword((prev) => !prev)}
             type="checkbox"
           />
           <label className="checkbox-label">Show Password</label>
         </div>
-        <div className="auth-footer">
-          <button type="submit" className="auth-btn">
+        <div className="w-full flex flex-col space-y-4">
+          <button type="submit" className="bg-blue-600 text-white py-2">
             Create an Account
           </button>
-          <span className="auth-span">Already have an account? </span>
-          <button onClick={onLogin} type="button" className="auth-link">
+          <div className="space-x-1">
+          <span>Already have an account? </span>
+          <button onClick={onLogin} type="button">
             Login here
           </button>
+          </div>
         </div>
       </form>
     </div>
