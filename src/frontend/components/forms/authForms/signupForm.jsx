@@ -47,7 +47,7 @@ export default function SignUpForm({ onLogin }) {
           <label htmlFor="signup-email">Email</label>
           <input
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="p-2"
+            className="p-2 bg-blue-100"
             required
             type="email"
             id="signup-email"
@@ -59,7 +59,7 @@ export default function SignUpForm({ onLogin }) {
           <label htmlFor="signup-password">Password</label>
           <input
             onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className="p-2"
+            className="p-2 bg-blue-100"
             required
             type={showPassword ? "text" : "password"}
             id="signup-password"

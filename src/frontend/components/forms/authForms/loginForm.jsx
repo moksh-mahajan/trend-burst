@@ -24,7 +24,7 @@ export default function LoginForm({ onSignUp }) {
           <label htmlFor="email">Username</label>
           <input
             onChange={(e) => setForm({ ...form, username: e.target.value })}
-            className="p-2"
+            className="p-2 bg-blue-100"
             type="username"
             id="username"
             placeholder="Username"
@@ -35,7 +35,7 @@ export default function LoginForm({ onSignUp }) {
           <label htmlFor="password">Password</label>
           <input
             onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className="p-2"
+            className="p-2 bg-blue-100"
             type="password"
             id="password"
             placeholder="*******"
