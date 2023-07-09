@@ -18,7 +18,7 @@ export default function RightSidebar() {
     (user) => user.username !== state.user.username
   );
   return (
-    <div className="w-1/4 mx-11">
+    <div className="fixed top-16 right-0 w-1/5 mx-11">
       {isLoading ? (
         <div>Loading...</div>
       ) : (

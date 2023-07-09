@@ -6,6 +6,7 @@ import Sidebar from "./sidebar";
 import PostCard from "./cards/postCard";
 import RightSidebar from "./rightSidebar";
 import CreatePostCard from "./cards/createPostCard";
+import EditProfileCard from "./cards/editProfileCard";
 export {
   LoginForm,
   SignUpForm,
@@ -15,4 +16,5 @@ export {
   PostCard,
   RightSidebar,
   CreatePostCard,
+  EditProfileCard,
 };

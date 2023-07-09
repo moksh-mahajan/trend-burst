@@ -21,7 +21,7 @@ export default function Home() {
   return isLoading ? (
     <>Loading...</>
   ) : (
-    <main className="w-1/2 ml-96 my-12">
+    <main className="w-1/2 mx-96 my-12">
       <CreatePostCard />
       <h2 className="text-xl font-semibold">Latest Posts</h2>
       <button onClick={() => dispatch({ type: "SORT_BY_TRENDING" })}>

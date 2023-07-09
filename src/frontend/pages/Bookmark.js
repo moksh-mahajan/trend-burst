@@ -19,7 +19,7 @@ export default function Bookmark() {
   return isLoading ? (
     <>Loading...</>
   ) : (
-    <main className="w-1/2 ml-96 my-12">
+    <main className="w-1/2 mx-96 my-12">
       <h2 className="text-xl font-semibold">Bookmark</h2>
       {bookmarkPosts.map((post) => (
         <PostCard post={post} />

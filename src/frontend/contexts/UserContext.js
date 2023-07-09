@@ -12,6 +12,11 @@ const userReducer = (state, action) => {
   switch (action.type) {
     case "SET_USERS":
       return { ...state, users: action.payload, isLoading: false };
+    case "SET_EDIT_USER":
+      const user = action.payload;
+      const userIndex = state.users.findIndex((u) => u._id === user._id);
+      state.users[userIndex] = action.payload;
+      return { ...state, isLoading: false };
     case "SET_BOOKMARKS":
       return { ...state, bookmarks: action.payload, isLoading: false };
     case "SET_FOLLOW_USER":
@@ -40,15 +45,31 @@ export const UserProvider = ({ children }) => {
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data.users);
         dispatch({ type: "SET_USERS", payload: data.users });
       }
     } catch (e) {
       console.error(e);
     }
   };
+  const editUser = async (userData) => {
+    try {
+      const token = localStorage.getItem(authTokenKey);
+      const headers = new Headers();
+      headers.append("Authorization", "Bearer " + token);
+      const response = await fetch(`/api/users/edit`, {
+        method: "POST",
+        body: JSON.stringify({ userData }),
+        headers,
+      });
+      if (response.status === 201) {
+        const data = await response.json();
+        dispatch({ type: "SET_EDIT_USER", payload: data.user });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
   const addBookmark = async (postId) => {
-    console.log(postId);
     try {
       const token = localStorage.getItem(authTokenKey);
       const headers = new Headers();
@@ -57,10 +78,8 @@ export const UserProvider = ({ children }) => {
         method: "POST",
         headers,
       });
-      console.log(response);
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
         dispatch({ type: "SET_BOOKMARKS", payload: data.bookmarks });
       }
     } catch (e) {
@@ -68,7 +87,6 @@ export const UserProvider = ({ children }) => {
     }
   };
   const removeBookmark = async (postId) => {
-    console.log(postId);
     try {
       const token = localStorage.getItem(authTokenKey);
       const headers = new Headers();
@@ -77,7 +95,6 @@ export const UserProvider = ({ children }) => {
         method: "POST",
         headers,
       });
-      console.log(response);
       if (response.status === 200) {
         const data = await response.json();
         console.log(data);
@@ -89,7 +106,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const followUser = async (userId) => {
-    console.log(userId);
     try {
       const token = localStorage.getItem(authTokenKey);
       const headers = new Headers();
@@ -98,11 +114,8 @@ export const UserProvider = ({ children }) => {
         method: "POST",
         headers,
       });
-      console.log(response);
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
-        // const {user,followUser} = data;
         dispatch({ type: "SET_FOLLOW_USER", payload: data });
       }
     } catch (e) {
@@ -111,7 +124,6 @@ export const UserProvider = ({ children }) => {
   };
 
   const unfollowUser = async (userId) => {
-    console.log(userId);
     try {
       const token = localStorage.getItem(authTokenKey);
       const headers = new Headers();
@@ -120,11 +132,8 @@ export const UserProvider = ({ children }) => {
         method: "POST",
         headers,
       });
-      console.log(response);
       if (response.status === 200) {
         const data = await response.json();
-        console.log(data);
-        // const {user,followUser} = data;
         dispatch({ type: "SET_FOLLOW_USER", payload: data });
       }
     } catch (e) {
@@ -137,6 +146,7 @@ export const UserProvider = ({ children }) => {
       value={{
         state,
         getUsers,
+        editUser,
         addBookmark,
         removeBookmark,
         followUser,

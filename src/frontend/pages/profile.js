@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import ProfileImg from "../components/profileImg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext, PostContext, UserContext } from "../contexts";
-import { PostCard } from "../components";
+import { EditProfileCard, PostCard } from "../components";
 
 export default function Profile() {
   const { username } = useParams();
@@ -13,13 +13,11 @@ export default function Profile() {
   const {
     state: { posts },
   } = useContext(PostContext);
-
   const user = users.find((user) => user.username === username);
   const userPosts = posts.filter((post) => post.username === username);
-  console.log("userPosts", posts);
 
   return (
-    <main className="w-1/2 ml-96 my-12">
+    <main className="w-1/2 mx-96 my-12">
       <ProfileCard user={user} numberOfPosts={userPosts.length} />
       {userPosts.map((post) => (
         <PostCard post={post} />
@@ -29,21 +27,48 @@ export default function Profile() {
 }
 
 function ProfileCard({ user, numberOfPosts }) {
-  const { username, firstName, lastName, followers, following } = user;
+  const {
+    username,
+    firstName,
+    lastName,
+    followers,
+    following,
+    bio,
+    portfolioUrl,
+  } = user;
   const { state: authState } = useContext(AuthContext);
   const isMe = authState.user.username === username;
-
+  const [showEditProfileModel, setShowEditProfileModel] = useState(false);
   return (
-    <div>
+    <div className="w-full flex flex-col justify-center items-center space-y-2 my-4 p-4 bg-white">
       <ProfileImg />
-      <p>
+      <p className="font-semibold text-xl">
         {firstName} {lastName}
       </p>
+      {isMe && (
+        <button
+          className="border px-4 py-1 border-blue-600 text-blue-600"
+          onClick={() => setShowEditProfileModel(true)}
+        >
+          Edit Profile
+        </button>
+      )}
       <p>@{username}</p>
-      <p>{followers.length} Followers</p>
-      <p>{following.length} Following</p>
-      <p>{numberOfPosts} posts</p>
-      {isMe && <button>Edit Profile</button>}
+      <p>{bio}</p>
+      <p className="text-red-600 underline">{portfolioUrl}</p>
+      <div className="flex space-x-6 text-lg font-semibold">
+        <p>{followers.length} Followers</p>
+        <p>{following.length} Following</p>
+        <p>{numberOfPosts} posts</p>
+      </div>
+      {showEditProfileModel ? (
+        <EditProfileCard
+          user={user}
+          setShowEditProfileModel={setShowEditProfileModel}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
