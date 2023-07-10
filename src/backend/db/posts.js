@@ -37,4 +37,49 @@ export const posts = [
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
+  {
+    _id: uuid(),
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo elit mi, ut placerat felis finibus non. Nulla facilisi. Integer ut maximus ligula. In hac habitasse platea dictumst. Proin euismod iaculis lacus, nec molestie nisl lobortis a. Nullam tristique vestibulum purus sed viverra. Fusce euismod nibh vitae purus lobortis tempus.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "johnsmith",
+    firstName: "John",
+    lastName: "Smith",
+    createdAt: "2023-07-10T10:00:00Z",
+    updatedAt: "2023-07-10T10:00:00Z",
+  },
+  {
+    _id: "uuid()",
+    content:
+      "Duis gravida mauris id magna egestas, ut semper dui malesuada. Aenean tincidunt lobortis tincidunt. Aliquam id rutrum dui. Nullam condimentum consectetur ante, sit amet vulputate lectus accumsan in. Phasellus euismod nisi nulla, nec varius turpis venenatis in. Nam dapibus mi id est vestibulum interdum. Maecenas viverra urna turpis, id malesuada lectus blandit sit amet. Donec eu risus vel turpis malesuada tristique. Pellentesque accumsan pharetra lectus, id venenatis lacus aliquam sit amet.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "janedoe",
+    firstName: "Jane",
+    lastName: "Doe",
+    createdAt: "2023-07-10T12:00:00Z",
+    updatedAt: "2023-07-10T12:00:00Z",
+  },
+  {
+    _id: uuid(),
+    content:
+      "Praesent eget consequat neque. Curabitur vitae ullamcorper tortor. Maecenas in ligula id mauris hendrerit tempor. Donec vitae tempor nulla. Vestibulum pretium sapien augue, vitae commodo elit fermentum in. Nullam dictum, erat et aliquet commodo, nunc risus fermentum felis, non gravida metus risus nec mauris. Sed tincidunt mi at feugiat bibendum. Suspendisse auctor ante id tortor faucibus, vitae tincidunt urna auctor.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "alexjones",
+    firstName: "Alex",
+    lastName: "Jones",
+    createdAt: "2023-07-10T15:00:00Z",
+    updatedAt: "2023-07-10T15:00:00Z",
+  },
 ];
