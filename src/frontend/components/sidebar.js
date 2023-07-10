@@ -47,10 +47,10 @@ export default function Sidebar() {
 
       <div className="flex space-x-4 items-center">
         <ProfileImg />
-        <div className="leading-5">
+        <Link to={`/profile/${username}`} className="leading-5">
           <h1 className="font-semibold">{`${firstName} ${lastName}`}</h1>
           <span className="text-sm text-gray-500">{`@${username}`}</span>
-        </div>
+        </Link>
         <BsThreeDots className="text-gray-500" />
       </div>
 

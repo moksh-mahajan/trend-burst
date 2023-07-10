@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { BsPlus, BsSearch } from "react-icons/bs";
 import { AuthContext, UserContext } from "../contexts";
 import ProfileImg from "./profileImg";
+import { Link } from "react-router-dom";
 
 export default function RightSidebar() {
   const { state } = useContext(AuthContext);
@@ -39,11 +40,13 @@ export default function RightSidebar() {
                 ({ _id, firstName, lastName, username, followers }) => (
                   <div key={_id} className="flex my-4 justify-between">
                     <div className="flex space-x-3">
+                    <Link to={`/profile/${username}`} className="flex space-x-3">
                       <ProfileImg />
                       <div>
                         <h5 className="font-semibold">{`${firstName} ${lastName}`}</h5>
                         <span className="text-gray-600">{`@${username}`}</span>
                       </div>
+                      </Link>
                     </div>
                     <div>
                       {followers.some(
